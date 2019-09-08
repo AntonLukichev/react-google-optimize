@@ -1,4 +1,6 @@
 import * as React from 'react'
+import Variant0 from "./ab/variant0";
+import Variant1 from "./ab/variant1";
 //import Variant0 from './ab/variant0';
 //import Variant1 from './ab/variant1';
 
@@ -20,6 +22,7 @@ interface IGlobalThis {
 }
 
 class TestComponent extends React.Component<IProps, IState> {
+  private intervalId: any;
   constructor (props: IProps) {
     super(props);
     this.state = {
@@ -29,14 +32,39 @@ class TestComponent extends React.Component<IProps, IState> {
   }
 
   async componentDidMount(): Promise<void> {
-    const dataLayer = globalThis.dataLayer || [];
-
+    const {experimentId} = this.props;
+    const dataLayer = (globalThis as any).dataLayer || [];
     await dataLayer.push({ event: "optimize.activate" });
-    console.log('componentDidMount', dataLayer);
+    this.intervalId = setInterval(() => {
+      console.log('check');
+      if ((globalThis as any).google_optimize !== undefined) {
+        const variant = (globalThis as any).google_optimize.get(experimentId);
+        console.log('get experiment', parseInt(variant,10));
+        this.setState({
+          experimentVariant: parseInt(variant,10),
+          experimentRun: true,
+        });
+        clearInterval(this.intervalId);
+
+      };
+    }, 200);
+    //console.log('componentDidMount', dataLayer);
   }
 
   render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | null {
-    //const {experimentId} = this.props;
+    const {experimentRun, experimentVariant} = this.state;
+    if (experimentRun) {
+      console.log(this.state);
+      // TODO: add multiple variants
+      if (experimentVariant === 1) {  //  for AB tests
+        return (
+          <Variant1/>
+        )
+      }
+      return (
+        <Variant0 />
+      )
+    }
     return null;
   }
 }
