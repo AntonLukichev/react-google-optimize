@@ -5,6 +5,10 @@ module.exports = {
   },
   extends: [
     'airbnb',
+    'plugin:react/recommended',
+    'plugin:jest/recommended',
+    'plugin:jsx-a11y/recommended',
+    'plugin:import/recommended',
   ],
   globals: {
     Atomics: 'readonly',
@@ -19,7 +23,13 @@ module.exports = {
   },
   plugins: [
     'react',
+    'import',
+    'jest',
+    'jsx-a11y',
+    'react-hooks',
   ],
   rules: {
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
   },
 };
