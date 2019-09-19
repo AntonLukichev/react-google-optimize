@@ -8,10 +8,10 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          <TestComponent experimentId="KPOowLzGS42RosiLqFKuIA" />
+        </p>
       </header>
-      <main>
-        <TestComponent experimentId="KPOowLzGS42RosiLqFKuIA" />
-      </main>
     </div>
   );
 }

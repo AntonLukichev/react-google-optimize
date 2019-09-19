@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Variant0 from './ab/variant0';
+import Variant1 from './ab/variant1';
 
 class TestComponent extends React.PureComponent {
   constructor(props) {
@@ -19,26 +21,32 @@ class TestComponent extends React.PureComponent {
       console.log('check');
       if (window.google_optimize !== undefined) {
         const variant = window.google_optimize.get(experimentId);
-        console.log('get experiment', parseInt(variant, 10));
-        this.setState({
-          experimentVariant: parseInt(variant, 10),
-          experimentRun: true,
-        });
+        if (variant === undefined) {
+          console.log('experiment not found');
+          this.setState({
+            experimentRun: true,
+          });
+        } else {
+          this.setState({
+            experimentVariant: parseInt(variant, 10),
+            experimentRun: true,
+          });
+          console.log('get experiment', parseInt(variant, 10));
+        }
         clearInterval(this.intervalId);
       }
-    }, 200);
-    // console.log('componentDidMount', dataLayer);
+    }, 100);
   }
 
   render() {
     const { experimentRun, experimentVariant } = this.state;
     if (!experimentRun) return null;
 
-    if (experimentVariant === 0) {
-      return null;
+    if (experimentVariant === 1) {
+      return (<Variant1 />);
     }
 
-    return null;
+    return (<Variant0 />);
   }
 }
 
