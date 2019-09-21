@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
 import TestComponent from '../../components/test1';
@@ -16,4 +17,11 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (store) => {
+  console.log(store);
+  return {
+    experiments: store.experiments,
+  };
+};
+
+export default connect(mapStateToProps)(App);
