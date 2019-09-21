@@ -1,7 +1,8 @@
-export const initialState = {
-  experiments: null,
-};
+import { combineReducers } from 'redux';
+import { experimentReducer } from './experiments';
 
-export function rootReducer(state = initialState) {
-  return state;
-}
+export const rootReducer = combineReducers({
+  experiments: experimentReducer,
+});
+
+export default rootReducer;

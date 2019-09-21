@@ -19,9 +19,7 @@ function App() {
 
 const mapStateToProps = (store) => {
   console.log(store);
-  return {
-    experiments: store.experiments,
-  };
+  return store.experiments;
 };
 
 export default connect(mapStateToProps)(App);
