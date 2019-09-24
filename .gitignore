@@ -25,4 +25,4 @@ yarn-error.log*
 # WebStrom
 .idea/
 
-/firebase/config.js
+/src/firebase/config.js
