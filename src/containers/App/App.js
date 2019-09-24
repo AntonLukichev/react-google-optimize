@@ -18,12 +18,13 @@ class App extends React.Component{
   }
 
   render() {
+    const { experiments } = this.props;
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            <TestComponent experimentLabel="test_experiment1" {...this.props} />
+            {experiments && <TestComponent experimentLabel="test_experiment1" {...this.props} />}
           </p>
         </header>
       </div>
@@ -35,8 +36,13 @@ const mapStateToProps = (store) => {
   return store.experiments;
 };
 
+App.defaultProps = {
+  experiments: {},
+};
+
 App.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  experiments: PropTypes.objectOf(PropTypes.object),
 };
 
 export default connect(mapStateToProps)(App);

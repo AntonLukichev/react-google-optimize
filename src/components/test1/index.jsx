@@ -15,16 +15,19 @@ class TestComponent extends React.PureComponent {
   }
 
   componentDidMount() {
-    // const { experimentLabel, experiments } = this.props;
+    const { experimentLabel, experiments } = this.props;
 
-    const variant = getVariant('KPOowLzGS42RosiLqFKuIA');
-    if (variant === null) {
-      this.setState({ experimentRun: true });
-    } else {
-      this.setState({
-        experimentVariant: variant,
-        experimentRun: true,
-      });
+    // TODO refactoring
+    if (experiments[experimentLabel].key !== undefined) {
+      const variant = getVariant(experiments[experimentLabel].key);
+      if (variant === null) {
+        this.setState({ experimentRun: true });
+      } else {
+        this.setState({
+          experimentVariant: variant,
+          experimentRun: true,
+        });
+      }
     }
   }
 
@@ -42,6 +45,7 @@ class TestComponent extends React.PureComponent {
 
 TestComponent.propTypes = {
   experimentLabel: PropTypes.string.isRequired,
+  experiments: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default TestComponent;
