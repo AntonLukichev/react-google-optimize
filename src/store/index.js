@@ -6,7 +6,7 @@ import { rootSaga } from '../sagas';
 
 const middleWares = [];
 const loggerMiddleware = createLogger({ collapsed: true });
-const sagaMiddleware = createSagaMiddleware()
+const sagaMiddleware = createSagaMiddleware();
 middleWares.push(loggerMiddleware);
 middleWares.push(sagaMiddleware);
 

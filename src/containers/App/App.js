@@ -14,7 +14,7 @@ class App extends React.Component{
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch({ type: EXPERIMENT_ACTIONS.EXPERIMENT_LOAD });
+    dispatch({ type: EXPERIMENT_ACTIONS.EXPERIMENTS_LOAD_REQUEST });
   }
 
   render() {
@@ -23,7 +23,7 @@ class App extends React.Component{
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            <TestComponent experimentId="KPOowLzGS42RosiLqFKuIA" />
+            <TestComponent experimentLabel="test_experiment1" {...this.props} />
           </p>
         </header>
       </div>

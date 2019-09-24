@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Variant0 from './ab/variant0';
 import Variant1 from './ab/variant1';
+import { getVariant } from '../experiments';
 
 class TestComponent extends React.PureComponent {
   constructor(props) {
@@ -13,29 +14,18 @@ class TestComponent extends React.PureComponent {
     };
   }
 
-  async componentDidMount() {
-    const { experimentId } = this.props;
-    const dataLayer = window.dataLayer || [];
-    await dataLayer.push({ event: 'optimize.activate' });
-    this.intervalId = setInterval(() => {
-      console.log('check');
-      if (window.google_optimize !== undefined) {
-        const variant = window.google_optimize.get(experimentId);
-        if (variant === undefined) {
-          console.log('experiment not found');
-          this.setState({
-            experimentRun: true,
-          });
-        } else {
-          this.setState({
-            experimentVariant: parseInt(variant, 10),
-            experimentRun: true,
-          });
-          console.log('get experiment', parseInt(variant, 10));
-        }
-        clearInterval(this.intervalId);
-      }
-    }, 100);
+  componentDidMount() {
+    // const { experimentLabel, experiments } = this.props;
+
+    const variant = getVariant('KPOowLzGS42RosiLqFKuIA');
+    if (variant === null) {
+      this.setState({ experimentRun: true });
+    } else {
+      this.setState({
+        experimentVariant: variant,
+        experimentRun: true,
+      });
+    }
   }
 
   render() {
@@ -51,7 +41,7 @@ class TestComponent extends React.PureComponent {
 }
 
 TestComponent.propTypes = {
-  experimentId: PropTypes.string.isRequired,
+  experimentLabel: PropTypes.string.isRequired,
 };
 
 export default TestComponent;
