@@ -8,7 +8,8 @@ export const EXPERIMENT_ACTIONS = {
   EXPERIMENT_RUN: 'EXPERIMENT_RUN',
 };
 
-export const getVariantAction = (key) => ({
+export const getVariantAction = (experimentLabel, experimentKey) => ({
   type: EXPERIMENT_ACTIONS.EXPERIMENT_VARIANT_REQUEST,
-  payload: key,
+  experimentLabel,
+  experimentKey,
 });

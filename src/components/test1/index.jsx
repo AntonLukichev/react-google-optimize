@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Variant0 from './ab/variant0';
 import Variant1 from './ab/variant1';
-// import { getVariant } from '../experiments';
 import { getVariantAction } from '../../actions/experimentActions';
 
 class TestComponent extends React.PureComponent {
@@ -11,33 +10,27 @@ class TestComponent extends React.PureComponent {
 
     this.state = {
       experimentRun: false,
-      experimentVariant: 0,
     };
   }
 
   componentDidMount() {
-    const { experimentLabel, experiments, dispatch } = this.props;
+    const { experimentLabel, experiment: { experiments }, dispatch } = this.props;
+    const experimentKey = experiments[experimentLabel].key;
 
-    // TODO refactoring
-    if (experiments[experimentLabel].key !== undefined) {
-      dispatch(getVariantAction(experiments[experimentLabel].key));
-      /* const variant = getVariant(experiments[experimentLabel].key, dispatch);
-      if (variant === null) {
-        this.setState({ experimentRun: true });
-      } else {
-        this.setState({
-          experimentVariant: variant,
-          experimentRun: true,
-        });
-      } */
+    if (experimentKey !== undefined) {
+      dispatch(getVariantAction(experimentLabel, experimentKey));
+      this.setState({ experimentRun: true });
     }
   }
 
   render() {
-    const { experimentRun, experimentVariant } = this.state;
-    if (!experimentRun) return null;
+    const { experimentRun } = this.state;
+    const { experimentLabel, experiment: { experiments } } = this.props;
+    const { variant } = experiments[experimentLabel];
 
-    if (experimentVariant === 1) {
+    if (!experimentRun || variant === undefined) return null;
+
+    if (variant === 1) {
       return (<Variant1 />);
     }
 
@@ -47,7 +40,7 @@ class TestComponent extends React.PureComponent {
 
 TestComponent.propTypes = {
   experimentLabel: PropTypes.string.isRequired,
-  experiments: PropTypes.objectOf(PropTypes.object).isRequired,
+  experiment: PropTypes.shape().isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 

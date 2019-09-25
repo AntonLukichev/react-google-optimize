@@ -1,7 +1,7 @@
 import { EXPERIMENT_ACTIONS } from '../actions';
 
 export const initialState = {
-  experiments: null,
+  experiments: {},
   error: '',
 };
 
@@ -15,8 +15,11 @@ export function experimentReducer(state = initialState, action) {
       return { ...state, error: action.payload };
     case EXPERIMENT_ACTIONS.EXPERIMENT_VARIANT_REQUEST:
       return { ...state };
-    case EXPERIMENT_ACTIONS.EXPERIMENT_VARIANT_SUCCES:
-      return { ...state, test: action.payload };
+    case EXPERIMENT_ACTIONS.EXPERIMENT_VARIANT_SUCCES: {
+      const { experiments } = state;
+      experiments[action.experimentLabel].variant = action.variant;
+      return { ...state, experiments };
+    }
     case EXPERIMENT_ACTIONS.EXPERIMENT_VARIANT_FAIL:
       return { ...state, test_fail: action.payload };
     case EXPERIMENT_ACTIONS.EXPERIMENT_RUN:

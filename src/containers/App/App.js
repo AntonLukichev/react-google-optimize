@@ -18,13 +18,13 @@ class App extends React.Component{
   }
 
   render() {
-    const { experiments } = this.props;
+    const { experiment } = this.props;
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            {experiments && <TestComponent experimentLabel="test_experiment1" {...this.props} />}
+            {Object.entries(experiment.experiments).length > 0 && <TestComponent experimentLabel="test_experiment1" {...this.props} />}
           </p>
         </header>
       </div>
@@ -32,17 +32,18 @@ class App extends React.Component{
   }
 }
 
-const mapStateToProps = (store) => {
-  return store.experiments;
+const mapStateToProps = (state) => {
+  const { experiment } = state;
+  return { experiment };
 };
 
 App.defaultProps = {
-  experiments: {},
+  experiment: {},
 };
 
 App.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  experiments: PropTypes.objectOf(PropTypes.object),
+  experiment: PropTypes.shape(),
 };
 
 export default connect(mapStateToProps)(App);
