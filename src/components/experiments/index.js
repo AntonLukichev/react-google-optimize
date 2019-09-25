@@ -1,11 +1,11 @@
-export const getVariant = async (experimentKey) => {
+export const getVariant = (experimentKey) => {
   if (!experimentKey) return;
 
   const limitCheck = 10 * 5; // timeout 200 * 5 is 1 second
   let countCheck = 0;
 
   const dataLayer = window.dataLayer || [];
-  await dataLayer.push({ event: 'optimize.activate' });
+  dataLayer.push({ event: 'optimize.activate' });
   const intervalId = setInterval(() => {
     console.log('check', countCheck);
     if (window.google_optimize !== undefined) {
@@ -14,7 +14,7 @@ export const getVariant = async (experimentKey) => {
       if (variant === undefined) {
         console.log('experiment not found');
         clearInterval(intervalId);
-        return null;
+        return 'not found';
       }
 
       console.log('get experiment', parseInt(variant, 10));
@@ -25,3 +25,5 @@ export const getVariant = async (experimentKey) => {
     if (countCheck > limitCheck) clearInterval(intervalId);
   }, 200);
 };
+
+export default getVariant;

@@ -13,6 +13,12 @@ export function experimentReducer(state = initialState, action) {
       return { ...state, experiments: action.payload, error: '' };
     case EXPERIMENT_ACTIONS.EXPERIMENTS_LOAD_FAIL:
       return { ...state, error: action.payload };
+    case EXPERIMENT_ACTIONS.EXPERIMENT_VARIANT_REQUEST:
+      return { ...state };
+    case EXPERIMENT_ACTIONS.EXPERIMENT_VARIANT_SUCCES:
+      return { ...state, test: action.payload };
+    case EXPERIMENT_ACTIONS.EXPERIMENT_VARIANT_FAIL:
+      return { ...state, test_fail: action.payload };
     case EXPERIMENT_ACTIONS.EXPERIMENT_RUN:
       break;
     default:

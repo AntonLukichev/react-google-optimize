@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Variant0 from './ab/variant0';
 import Variant1 from './ab/variant1';
-import { getVariant } from '../experiments';
+// import { getVariant } from '../experiments';
+import { getVariantAction } from '../../actions/experimentActions';
 
 class TestComponent extends React.PureComponent {
   constructor(props) {
@@ -15,11 +16,12 @@ class TestComponent extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { experimentLabel, experiments } = this.props;
+    const { experimentLabel, experiments, dispatch } = this.props;
 
     // TODO refactoring
     if (experiments[experimentLabel].key !== undefined) {
-      const variant = getVariant(experiments[experimentLabel].key);
+      dispatch(getVariantAction(experiments[experimentLabel].key));
+      /* const variant = getVariant(experiments[experimentLabel].key, dispatch);
       if (variant === null) {
         this.setState({ experimentRun: true });
       } else {
@@ -27,7 +29,7 @@ class TestComponent extends React.PureComponent {
           experimentVariant: variant,
           experimentRun: true,
         });
-      }
+      } */
     }
   }
 
@@ -46,6 +48,7 @@ class TestComponent extends React.PureComponent {
 TestComponent.propTypes = {
   experimentLabel: PropTypes.string.isRequired,
   experiments: PropTypes.objectOf(PropTypes.object).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default TestComponent;

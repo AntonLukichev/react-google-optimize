@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { experimentReducer } from './experiments';
+import { experimentReducer } from './experimentReducer';
 
 export const rootReducer = combineReducers({
   experiments: experimentReducer,
