@@ -18,14 +18,17 @@ class App extends React.Component{
   }
 
   render() {
-    const { experiment } = this.props;
+    const { experiment: { experiments } } = this.props;
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            {Object.entries(experiment.experiments).length > 0 && <TestComponent experimentLabel="test_experiment1" {...this.props} />}
-          </p>
+          <div>
+            {experiments.test_click && <TestComponent experimentLabel="test_click" {...this.props} />}
+          </div>
+          <div>
+            {experiments.test_experiment1 && <TestComponent experimentLabel="test_experiment1" {...this.props} />}
+          </div>
         </header>
       </div>
     );

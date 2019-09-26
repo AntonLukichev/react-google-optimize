@@ -14,9 +14,10 @@
     "redux-saga": "^1.1.1"
   },
   "scripts": {
-    "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "clean": "rimraf build",
+    "analyze": "npm run build && source-map-explorer 'build/static/js/*.js'",
+    "start": "npm run clean && react-scripts start",
+    "build": "npm run clean && react-scripts build",
     "deploy": "now",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -44,6 +45,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
+    "rimraf": "^3.0.0",
     "source-map-explorer": "^2.0.1"
   }
 }

@@ -3,11 +3,11 @@ import {
   call,
   put,
   take,
+  takeEvery,
   delay,
 } from 'redux-saga/effects';
 import { EXPERIMENT_ACTIONS } from '../actions';
 import { getExperiments } from '../firebase/utils';
-// import { getVariant } from '../components/experiments';
 
 function* fetchExperiments() {
   while (true) {
@@ -21,9 +21,10 @@ function* fetchExperiments() {
   }
 }
 
-function* getVariant2(key) {
+function* getVariant(key) {
   const dataLayer = window.dataLayer || [];
   dataLayer.push({ event: 'optimize.activate' });
+  yield delay(100);
 
   for (let i = 0; i < 10; i += 1) {
     try {
@@ -47,26 +48,24 @@ function* getVariant2(key) {
   throw new Error('google optimize failed');
 }
 
-function* getVariantSaga() {
-  while (true) {
-    try {
-      const { experimentLabel, experimentKey } = yield take(EXPERIMENT_ACTIONS.EXPERIMENT_VARIANT_REQUEST);
-      const variant = yield call(getVariant2, experimentKey);
-      yield put({
-        type: EXPERIMENT_ACTIONS.EXPERIMENT_VARIANT_SUCCES,
-        experimentLabel,
-        experimentKey,
-        variant,
-      });
-    } catch (e) {
-      yield put({ type: EXPERIMENT_ACTIONS.EXPERIMENT_VARIANT_FAIL, payload: e.message });
-    }
+function* getVariantSaga(action) {
+  try {
+    const { experimentLabel, experimentKey } = action;
+    const variant = yield call(getVariant, experimentKey);
+    yield put({
+      type: EXPERIMENT_ACTIONS.EXPERIMENT_VARIANT_SUCCES,
+      experimentLabel,
+      experimentKey,
+      variant,
+    });
+  } catch (e) {
+    yield put({ type: EXPERIMENT_ACTIONS.EXPERIMENT_VARIANT_FAIL, payload: e.message });
   }
 }
 
 export function* experimentSaga() {
   yield fork(fetchExperiments);
-  yield fork(getVariantSaga);
+  yield takeEvery(EXPERIMENT_ACTIONS.EXPERIMENT_VARIANT_REQUEST, getVariantSaga);
 }
 
 export default experimentSaga;
