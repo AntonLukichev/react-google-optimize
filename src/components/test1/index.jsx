@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Variant0 from './ab/variant0';
 import Variant1 from './ab/variant1';
+import { getVariantAction } from '../../actions/experimentActions';
 
 class TestComponent extends React.PureComponent {
   constructor(props) {
@@ -9,40 +10,27 @@ class TestComponent extends React.PureComponent {
 
     this.state = {
       experimentRun: false,
-      experimentVariant: 0,
     };
   }
 
-  async componentDidMount() {
-    const { experimentId } = this.props;
-    const dataLayer = window.dataLayer || [];
-    await dataLayer.push({ event: 'optimize.activate' });
-    this.intervalId = setInterval(() => {
-      console.log('check');
-      if (window.google_optimize !== undefined) {
-        const variant = window.google_optimize.get(experimentId);
-        if (variant === undefined) {
-          console.log('experiment not found');
-          this.setState({
-            experimentRun: true,
-          });
-        } else {
-          this.setState({
-            experimentVariant: parseInt(variant, 10),
-            experimentRun: true,
-          });
-          console.log('get experiment', parseInt(variant, 10));
-        }
-        clearInterval(this.intervalId);
-      }
-    }, 100);
+  componentDidMount() {
+    const { experimentLabel, experiment: { experiments }, dispatch } = this.props;
+    const experimentKey = experiments[experimentLabel].key;
+
+    if (experimentKey !== undefined) {
+      dispatch(getVariantAction(experimentLabel, experimentKey));
+      this.setState({ experimentRun: true });
+    }
   }
 
   render() {
-    const { experimentRun, experimentVariant } = this.state;
-    if (!experimentRun) return null;
+    const { experimentRun } = this.state;
+    const { experimentLabel, experiment: { experiments } } = this.props;
+    const { variant } = experiments[experimentLabel];
 
-    if (experimentVariant === 1) {
+    if (!experimentRun || variant === undefined) return null;
+
+    if (variant === 1) {
       return (<Variant1 />);
     }
 
@@ -51,7 +39,9 @@ class TestComponent extends React.PureComponent {
 }
 
 TestComponent.propTypes = {
-  experimentId: PropTypes.string.isRequired,
+  experimentLabel: PropTypes.string.isRequired,
+  experiment: PropTypes.shape().isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default TestComponent;

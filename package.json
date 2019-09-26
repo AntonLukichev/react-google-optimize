@@ -1,19 +1,37 @@
 {
-  "name": "react-google-optimize",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@antonlukichev/react-google-optimize",
+  "description": "A/B testing is easy... Example use React/Redux/Saga/Firebase, example -> https://react-google-optimize.lukas2k7.now.sh/",
+  "version": "0.2.0",
+  "private": false,
+  "author": "Anton Lukichev <anton@lukichev.pro>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntonLukichev/react-google-optimize.git",
+  },
+  "bugs": {
+    "url": "https://github.com/AntonLukichev/react-google-optimize/issues"
+  },
+  "homepage": "https://github.com/AntonLukichev/react-google-optimize#readme",
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com/"
+  },
   "dependencies": {
+    "firebase": "^6.6.2",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-redux": "^7.1.1",
     "react-scripts": "3.1.1",
-    "redux": "^4.0.4"
+    "redux": "^4.0.4",
+    "redux-logger": "^3.0.6",
+    "redux-saga": "^1.1.1"
   },
   "scripts": {
-    "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "clean": "rimraf build",
+    "analyze": "npm run build && source-map-explorer 'build/static/js/*.js'",
+    "start": "npm run clean && react-scripts start",
+    "build": "npm run clean && react-scripts build",
     "deploy": "now",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -41,6 +59,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
+    "rimraf": "^3.0.0",
     "source-map-explorer": "^2.0.1"
   }
 }
