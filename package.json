@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AntonLukichev/react-google-optimize.git",
+    "url": "git+https://github.com/AntonLukichev/react-google-optimize.git"
   },
   "bugs": {
     "url": "https://github.com/AntonLukichev/react-google-optimize/issues"
