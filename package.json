@@ -1,7 +1,21 @@
 {
-  "name": "react-google-optimize",
+  "name": "@antonlukichev/react-google-optimize",
+  "description": "A/B testing is easy... Example use React/Redux/Saga/Firebase, example -> https://react-google-optimize.lukas2k7.now.sh/",
   "version": "0.2.0",
-  "private": true,
+  "private": false,
+  "author": "Anton Lukichev <anton@lukichev.pro>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntonLukichev/react-google-optimize.git",
+  },
+  "bugs": {
+    "url": "https://github.com/AntonLukichev/react-google-optimize/issues"
+  },
+  "homepage": "https://github.com/AntonLukichev/react-google-optimize#readme",
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com/"
+  },
   "dependencies": {
     "firebase": "^6.6.2",
     "prop-types": "^15.7.2",
