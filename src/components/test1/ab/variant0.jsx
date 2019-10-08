@@ -13,7 +13,7 @@ const handleClick = () => {
 export const Variant0 = () => (
   <>
     <div
-      onClick={handleClick()}
+      onClick={handleClick}
       onKeyPress={() => void 0}
       role="button"
       tabIndex="0"

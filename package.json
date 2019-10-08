@@ -1,7 +1,7 @@
 {
   "name": "@antonlukichev/react-google-optimize",
   "description": "A/B testing is easy... Example use React/Redux/Saga/Firebase, example -> https://react-google-optimize.lukas2k7.now.sh/",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": false,
   "author": "Anton Lukichev <anton@lukichev.pro>",
   "license": "MIT",
@@ -22,6 +22,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-redux": "^7.1.1",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.1.1",
     "redux": "^4.0.4",
     "redux-logger": "^3.0.6",

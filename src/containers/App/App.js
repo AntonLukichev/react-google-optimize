@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import logo from './logo.svg';
 import './App.css';
+import Logo from '../../components/logo';
 import TestComponent from '../../components/test1';
 import { EXPERIMENT_ACTIONS } from '../../actions';
 
@@ -22,7 +22,7 @@ class App extends React.Component{
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <Logo />
           <div>
             {experiments.test_click && <TestComponent experimentLabel="test_click" {...this.props} />}
           </div>
