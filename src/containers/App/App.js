@@ -6,7 +6,7 @@ import Logo from '../../components/logo';
 import TestComponent from '../../components/test1';
 import { EXPERIMENT_ACTIONS } from '../../actions';
 
-class App extends React.Component{
+class App extends React.Component {
   // eslint-disable-next-line no-useless-constructor
   constructor(props) {
     super(props);

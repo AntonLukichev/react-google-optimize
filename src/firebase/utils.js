@@ -7,8 +7,6 @@ firebase.initializeApp(firebaseConfig);
 export const experimentRef = firebase.database().ref('experiments');
 
 export const getExperiments = async () => {
-  const res = await experimentRef.once('value').then((snapshot) => {
-    return snapshot.val();
-  });
+  const res = await experimentRef.once('value').then((snapshot) => snapshot.val());
   return res;
 };
